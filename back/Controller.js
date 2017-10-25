@@ -1,4 +1,5 @@
 let mysql = require('mysql');
+let config = require('./config.js');
 let initSql = require('./initSql.js');
 let fs = require('fs');
 let pathUtil = require('path');
@@ -6,18 +7,17 @@ let itemPath = pathUtil.resolve(__dirname, '..');
 let backPath = pathUtil.join(itemPath, 'back');
 let frontPath = pathUtil.join(itemPath, 'front');
 let ejs = require('ejs');
-var str = ejs.render("html<%=name %>", { name: '123' });
-
 
 let dboptionWithDB = {
-    user: 'root',
-    password: 'Nuoyadb_1',
+    user: config.db.user,
+    password: config.db.password,
     database: 'ndsCMS'
 }
 
+
 let dboption = {
-    user: 'root',
-    password: 'Nuoyadb_1'
+    user: config.db.user,
+    password: config.db.password,
 }
 
 function query(sql, dbOption) {

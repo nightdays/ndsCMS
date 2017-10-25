@@ -1,7 +1,4 @@
 (function (w) {
-
-    w.serviceUrl = "http://localhost:8081/";
-
     w.http = function (url) {
         return function (data) {
             return new Promise(function (resolve, reject) {
