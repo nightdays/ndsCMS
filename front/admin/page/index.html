@@ -1,0 +1,109 @@
+<html>
+<style>
+    ul,
+    li {
+        list-style: none;
+    }
+
+    .parent {
+        width: 1000px;
+    }
+
+    .pageList {
+        display: inline-block;
+        vertical-align: top;
+        overflow: hidden;
+        width: 55%;
+    }
+
+    .page:hover {
+        cursor: pointer;
+    }
+
+    .active {
+        background: gray;
+    }
+
+    .pageEdit {
+        display: inline-block;
+        overflow: hidden;
+        width: 25%;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div class="parent">
+            <ul class="pageList">
+                <li v-for="temp in pageList" class="page" :class="{active: temp.code == currentPage.code}" @click="changeCurrentPage(temp)">
+                    <span>{{temp.name}}</span>
+                    <span>{{temp.code}}</span>
+                    <span>模板: {{temp.template_code}}</span>
+                </li>
+            </ul>
+            <div class="pageEdit">
+                <button @click="deletePage">删除</button>
+            </div>
+        </div>
+        <div>新增页面</div>
+        页面名:
+        <input v-model="submitForm.name" /> 
+        页面码:
+        <input v-model="submitForm.code" /> 
+        模板码:
+        <input v-model="submitForm.template_code" /> 
+        <button @click="addPage">新增</button>
+    </div>
+
+
+    <script src="../js/vue.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                pageList: [],
+                currentPage: {},
+                submitForm: {
+                    code: "",
+                    name: "",
+                    template_code: ""
+                }
+            },
+            mounted: function () {
+                this.getPageList();
+            },
+            methods: {
+                changeCurrentPage(temp) {
+                    this.currentPage = temp;
+                },
+                async getPageList() {
+                    let result = await ajax('getPageList');
+                    this.pageList = result.data;
+                    this.currentPage = this.pageList[0];
+                },
+                async savePage() {
+                    let result = await ajax('savePage', this.currentPage);
+                    alert("修改成功");
+                },
+                async deletePage() {
+                    let result = await ajax('deletePage', this.currentPage);
+                    this.getPageList();
+                    alert("删除成功");
+                },
+                async addPage() {
+                    let result = await ajax('addPage', this.submitForm);
+                    if (result.res == 'success') {
+                        alert("新增成功")
+                        this.getPageList();
+                        this.submitForm = {};
+                    } else {
+                        alert(result.res);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

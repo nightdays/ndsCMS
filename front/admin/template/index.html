@@ -1,0 +1,107 @@
+<html>
+<style>
+    ul,
+    li {
+        list-style: none;
+    }
+
+    .parent {
+        width: 1000px;
+    }
+
+    .templateList {
+        display: inline-block;
+        vertical-align: top;
+        overflow: hidden;
+        width: 15%;
+    }
+
+    .template:hover {
+        cursor: pointer;
+    }
+
+    .active {
+        background: gray;
+    }
+
+    .templateEdit {
+        display: inline-block;
+        overflow: hidden;
+        width: 75%;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div class="parent">
+            <ul class="templateList">
+                <li v-for="temp in templateList" class="template" :class="{active: temp.code == currentTemplate.code}" @click="changeCurrentTemplate(temp)">
+                    <span>{{temp.name}}</span>
+                </li>
+            </ul>
+            <div class="templateEdit">
+                <textarea cols="100" rows="20" v-model="currentTemplate.value"></textarea>
+                <button @click="saveTemplate">修改</button>
+                <button @click="deleteTemplate">删除</button>
+            </div>
+        </div>
+        <div>新增模板</div>
+        模板名:
+        <input v-model="submitForm.name" /> 
+        模板码:
+        <input v-model="submitForm.code" /> 
+        <button @click="addTemplate">新增</button>
+    </div>
+
+
+    <script src="../js/vue.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                templateList: [],
+                currentTemplate: {},
+                submitForm: {
+                    code: "",
+                    name: "",
+                    path: ""
+                }
+            },
+            mounted: function () {
+                this.getTemplateList();
+            },
+            methods: {
+                changeCurrentTemplate(temp) {
+                    this.currentTemplate = temp;
+                },
+                async getTemplateList() {
+                    let result = await ajax('getTemplateList');
+                    this.templateList = result.data;
+                    this.currentTemplate = this.templateList[0];
+                },
+                async saveTemplate() {
+                    let result = await ajax('saveTemplate', this.currentTemplate);
+                    alert("修改成功");
+                },
+                async deleteTemplate() {
+                    let result = await ajax('deleteTemplate', this.currentTemplate);
+                    this.getTemplateList();
+                    alert("删除成功");
+                },
+                async addTemplate() {
+                    let result = await ajax('addTemplate', this.submitForm);
+                    if (result.res == 'success') {
+                        alert("新增成功")
+                        this.getTemplateList();
+                        this.submitForm = {};
+                    } else {
+                        alert(result.res);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
