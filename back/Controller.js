@@ -56,7 +56,7 @@ let createDB = async function (callback) {
     let result = await query("show databases", dboption);
     let flag = false;
     for (let db of result) {
-        if (db.Database == 'ndscms') {
+        if (db.Database.toUpperCase() == 'NDSCMS') {
             flag = true;
             break;
         }
