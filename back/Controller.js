@@ -10,14 +10,12 @@ var str = ejs.render("html<%=name %>", { name: '123' });
 
 
 let dboptionWithDB = {
-    host: 'localhost',
     user: 'root',
     password: 'Nuoyadb_1',
     database: 'ndsCMS'
 }
 
 let dboption = {
-    host: 'localhost',
     user: 'root',
     password: ''
 }
