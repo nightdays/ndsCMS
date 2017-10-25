@@ -17,7 +17,7 @@ let dboptionWithDB = {
 
 let dboption = {
     user: 'root',
-    password: ''
+    password: 'Nuoyadb_1'
 }
 
 function query(sql, dbOption) {
