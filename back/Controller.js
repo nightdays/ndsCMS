@@ -63,11 +63,12 @@ let createDB = async function (callback) {
     }
     if (flag) {
         await query("drop database ndsCMS", dboption);
-        flag = await query("create database ndsCMS", dboption);
     }
-    else {
-        flag = await query("create database ndsCMS", dboption);
-    }
+    //创建数据库
+    await query("create database ndsCMS", dboption);
+    //设置数据库utf8
+    await query("alter database ndsCMS character set utf8", dboption);
+
 
     if (flag) {
         for (let sql of initSql.initTable) {
