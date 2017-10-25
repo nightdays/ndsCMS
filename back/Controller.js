@@ -128,6 +128,12 @@ let controllers = {
         res.send({ res: "success" });
     },
 
+    deletePage: async function (req, res) {
+        let code = req.body.code;
+        await query(`delete from t_page where code = "${code}"`);
+        res.send({ res: "success" });
+    },
+
     getTemplate: async function (req, res) {
         let code = req.body.code;
         let result = await query(`select * from t_template  where code = "${code}"`);
