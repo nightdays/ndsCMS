@@ -1,0 +1,1 @@
+node ../js/startServer.js

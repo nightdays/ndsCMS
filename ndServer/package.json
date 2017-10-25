@@ -1,0 +1,24 @@
+{
+  "name": "ndserver",
+  "version": "1.0.0",
+  "description": "基于express编写的服务器",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nightdaysOrg/ndServer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nightdaysOrg/ndServer/issues"
+  },
+  "homepage": "https://github.com/nightdaysOrg/ndServer#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.15.3",
+    "multer": "^1.3.0"
+  }
+}
